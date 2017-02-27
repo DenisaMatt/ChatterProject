@@ -3,12 +3,30 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
+using static ChatterProject.Models.Content;
 
 namespace ChatterProject.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public virtual ICollection<Content> Content { get; set; }
+
+        public class MyEntities : DbContext
+        {
+            public DbSet<User> Users { get; set; }
+
+            protected override void OnModelCreating(DbModelBuilder modelBuilder)
+            {
+                modelBuilder.Entity<User>()
+                    .HasMany(x => x.Followers).WithMany(x => x.Following)
+                    .Map(x => x.ToTable("Followers")
+                        .MapLeftKey("UserId")
+                        .MapRightKey("FollowerId"));
+            }
+        }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -29,5 +47,7 @@ namespace ChatterProject.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<ChatterProject.Models.Content> Contents { get; set; }
     }
 }
