@@ -13,19 +13,26 @@ namespace ChatterProject.Models
     {
         public virtual ICollection<Content> Content { get; set; }
 
-        public class MyEntities : DbContext
-        {
-            public DbSet<User> Users { get; set; }
+        //public class MyEntities : DbContext
+        //{
+        //    public DbSet<User> Users { get; set; }
 
-            protected override void OnModelCreating(DbModelBuilder modelBuilder)
-            {
-                modelBuilder.Entity<User>()
-                    .HasMany(x => x.Followers).WithMany(x => x.Following)
-                    .Map(x => x.ToTable("Followers")
-                        .MapLeftKey("UserId")
-                        .MapRightKey("FollowerId"));
-            }
-        }
+        //    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //    {
+        //        modelBuilder.Entity<User>()
+        //        .HasMany(m => m.Followers)
+        //        .WithMany(m => m.Following)
+        //        .Map(x => x.MapLeftKey("UserId")
+        //        .MapRightKey("FollowerId")
+        //        .ToTable("UserFollowers"));
+
+        //        //modelBuilder.Entity<User>()
+        //        //    .HasMany(x => x.Followers).WithMany(x => x.Following)
+        //        //    .Map(x => x.ToTable("Followers")
+        //        //        .MapLeftKey("UserId")
+        //        //        .MapRightKey("FollowerId"));
+        //    }
+        //}
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

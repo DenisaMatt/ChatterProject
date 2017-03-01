@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ChatterProject.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ChatterProject.Controllers
 {
@@ -32,9 +34,32 @@ namespace ChatterProject.Controllers
             {
                 return HttpNotFound();
             }
-            return View(content);
-        }
+          
+            
+                //string emailId = content.ApplicationUser.Email;
+                //Daniel: We can populate our new view model entity with a linq query. We have a lot of flexibility
 
+                var viewModel = new ContentViewModel
+
+                {
+
+                    //We can reuse the comment form from a couple of lines above
+                    Content = content,
+                    //We don't want to pull back all the procedures, just the one with the same priority as our comment
+                    ApplicationUser = (from c in db.Users
+                                       where c.Email == content.ApplicationUser.Email
+                                       select c).First()
+                };
+
+                //Daniel: We can no longer pass back a comment form. We need to pass back our new view model
+                return View(viewModel);
+
+                // This was was we retunred before
+                //return View(commentFormModel);
+
+                //return View(content);
+            }
+        
         // GET: Contents/Create
         public ActionResult Create()
         {

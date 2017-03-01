@@ -1,4 +1,4 @@
-﻿@model ChatterProject.Models.Content
+﻿@model ChatterProject.Models.ContentViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -11,32 +11,32 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Message)
+            @Html.DisplayNameFor(model => model.Content.Message)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Message)
+            @Html.DisplayFor(model => model.Content.Message)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Photo)
+            @Html.DisplayNameFor(model => model.Content.Photo)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Photo)
+            @Html.DisplayFor(model => model.Content.Photo)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DateTime)
+            @Html.DisplayNameFor(model => model.Content.DateTime)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DateTime)
+            @Html.DisplayFor(model => model.Content.DateTime)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Content.ContentID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
